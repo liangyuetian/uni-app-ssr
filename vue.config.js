@@ -5,11 +5,11 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const VUE_NODE = process.env.VUE_NODE === 'node'
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
-  // css: {
-  //   extract: false // 关闭提取css,不关闭 node渲染会报错
-  // },
+  css: {
+    extract: false // 关闭提取css,不关闭 node渲染会报错
+  },
   configureWebpack: (c) => {
-    console.log(c)
+    // console.log(c)
     return {
       // 将 entry 指向应用程序的 server entry 文件
       entry: {
@@ -27,7 +27,6 @@ module.exports = {
       output: {
         libraryTarget: VUE_NODE ? 'commonjs2' : undefined
       },
-
       // https://webpack.js.org/configuration/externals/#function
       // https://github.com/liady/webpack-node-externals
       // 外置化应用程序依赖模块。可以使服务器构建速度更快，
@@ -43,11 +42,11 @@ module.exports = {
       // 构建为单个 JSON 文件的插件。
       // 默认文件名为 `vue-ssr-server-bundle.json`
       plugins: [
-        new HtmlWebpackPlugin({
-          template:'./public/index.html',
-          filename:'index22.html'
-        })
-        // VUE_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()
+        // new HtmlWebpackPlugin({
+        //   template:'./public/index.html',
+        //   filename:'index22.html'
+        // }),
+        VUE_NODE ? new VueSSRServerPlugin() : new VueSSRClientPlugin()
       ]
     }
   }
